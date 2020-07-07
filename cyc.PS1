@@ -4,21 +4,31 @@
 
 $test = Get-ChildItem -Include *.c
 Write-Host $test
+$test_counter = 1
+$test_file_location = '.\tests\'
 
 # Automatically detects task and language (c or c++) if no file name or test
 # folder are provided.
 if ($args[0] -eq $null -and $args[1] -eq $null) {
-    $file = Get-ChildItem -Path $pwd\*.c*
+    $file = Get-ChildItem -Path .\*.c*
     $task = $file.BaseName
     $extension = $file.Extension
+    $run_tests = $true
 }
+# Either user only specified file to compile and wants to run no tests, or user
+# specified file to compile and a custom directory for the test cases.
 else {
     $task, $extension = $args[0].split('.')
+    if ($args[1] -eq $null) {
+        $run_tests = $false
+    } else {
+        $test_file_location = $args[1]
+    }
 }
 
-# Selecting command for proper language
-if ($extension -eq 'c') {
-    cmd /c 'gcc.exe -static -fno-optimize-sibling-calls -fno-strict-aliasing -DONLINE_JUDGE -fno-asm -lm -s -Wl,--stack=268435456 -O2 -o' $task $args[0]
+# Selecting compile command for proper language. Options based on Codeforces competition standards
+if ($extension -eq '.c') {
+    cmd /c 'gcc.exe -static -fno-optimize-sibling-calls -fno-strict-aliasing -DONLINE_JUDGE -fno-asm -lm -s -Wl,--stack=268435456 -O2 -o' $task $task$extension
 }
 elseif ($extension -eq 'cpp') {
     Write-Host 'c++'
@@ -27,7 +37,11 @@ else {
     Write-Host "The file you specified isn't supported by this script."
 }
 
-# if ($args[1] -ne $null) {
-#     Write-Host 'empty'
-# } 
-
+# Adds Test Cases to an array
+if ($run_tests -eq $true) {
+    $input_test_array = Get-ChildItem -Path .\$test_file_location\'*in*'
+    Get-ChildItem -Path .\$test_file_location\'*in*'
+    $output_test_array = Get-ChildItem -Path .\$test_file_location\'*out*'
+} else {
+    Write-Host 'uh oh'
+}
