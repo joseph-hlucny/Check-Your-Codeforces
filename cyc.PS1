@@ -1,0 +1,1 @@
+#Get-Content .\tests\test.txt | .\A.exe
