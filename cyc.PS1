@@ -37,11 +37,13 @@ else {
     Write-Host "The file you specified isn't supported by this script."
 }
 
-# Adds Test Cases to an array
-if ($run_tests -eq $true) {
-    $input_test_array = Get-ChildItem -Path .\$test_file_location\'*in*'
-    Get-ChildItem -Path .\$test_file_location\'*in*'
-    $output_test_array = Get-ChildItem -Path .\$test_file_location\'*out*'
-} else {
-    Write-Host 'uh oh'
+# Compares the differences between expected results and actual results for each test case
+$input = Get-ChildItem -Path .\$test_file_location\$test_counter'*in*'
+$output = Get-ChildItem -Path .\$test_file_location\$test_counter'*out*'
+while ($input -ne $null) {
+    Write-Host 'Test '$test_counter
+    fc.exe /n $input.FullName $output.FullName
+    $test_counter = $test_counter + 1
+    $input = Get-ChildItem -Path .\$test_file_location\$test_counter'*in*'
+    $output = Get-ChildItem -Path .\$test_file_location\$test_counter'*out*'
 }
