@@ -23,14 +23,14 @@ else {
     }
 }
 
-Write-Host 'Running task' $task':'
+Write-Host 'Running task' $task':'`n
 
 # Selecting compile command for proper language. Options based on Codeforces competition standards
 if ($extension -eq '.c') {
     cmd /c 'gcc.exe -static -fno-optimize-sibling-calls -fno-strict-aliasing -DONLINE_JUDGE -fno-asm -lm -s -Wl,--stack=268435456 -O2 -o' $task $task$extension
 }
-elseif ($extension -eq 'cpp') {
-    Write-Host 'c++'
+elseif ($extension -eq '.cpp') {
+    cmd /c 'g++.exe -std=c++11 -o' $task $task$extension
 }
 else {
     Write-Host "The file you specified isn't supported by this script."
