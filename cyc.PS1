@@ -40,10 +40,15 @@ else {
 # Compares the differences between expected results and actual results for each test case
 $input = Get-ChildItem -Path .\$test_file_location\$test_counter'*in*'
 $output = Get-ChildItem -Path .\$test_file_location\$test_counter'*out*'
+$solution = Get-ChildItem -Path .\$test_file_location\$test_counter'*sln*'
 while ($input -ne $null) {
     Write-Host 'Test '$test_counter
-    fc.exe /n $input.FullName $output.FullName
+
+    cmd.exe /c "$task.exe < $($input.FullName) > $($output.FullName)"
+    # Start-Process $task -RedirectStandardInput $input.FullName -RedirectStandardOutput $output.FullName
+    fc.exe /n $solution.FullName $output.FullName
     $test_counter = $test_counter + 1
-    $input = Get-ChildItem -Path .\$test_file_location\$test_counter'*in*'
-    $output = Get-ChildItem -Path .\$test_file_location\$test_counter'*out*'
+    $input = Get-ChildItem .\$test_file_location\$test_counter'*in*'
+    $output = Get-ChildItem .\$test_file_location\$test_counter'*out*'
+    $solution = Get-ChildItem .\$test_file_location\$test_counter'*sln*'
 }
