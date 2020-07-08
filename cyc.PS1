@@ -1,7 +1,3 @@
-#Get-Content .\tests\test.txt | .\A.exe
-# $task, $language = $args[0].split('.')
-# Write-Host 'Running task' $task':'
-
 $test = Get-ChildItem -Include *.c
 Write-Host $test
 $test_counter = 1
@@ -21,10 +17,13 @@ else {
     $task, $extension = $args[0].split('.')
     if ($args[1] -eq $null) {
         $run_tests = $false
-    } else {
+    }
+    else {
         $test_file_location = $args[1]
     }
 }
+
+Write-Host 'Running task' $task':'
 
 # Selecting compile command for proper language. Options based on Codeforces competition standards
 if ($extension -eq '.c') {
