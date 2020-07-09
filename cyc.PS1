@@ -36,11 +36,12 @@ else {
     Write-Host "The file you specified isn't supported by this script."
 }
 
-# Compares the differences between expected results and actual results for each test case
+# Compares the differences between expected results and actual results for each test case.
+# If the input file is empty, it will not run that test case.
 $input = Get-ChildItem -Path .\$test_file_location\$test_counter'*in*'
 $output = Get-ChildItem -Path .\$test_file_location\$test_counter'*out*'
 $solution = Get-ChildItem -Path .\$test_file_location\$test_counter'*sln*'
-while ($input -ne $null) {
+while ($input -ne $null -and $input.length -gt 0) {
     Write-Host 'Test '$test_counter
 
     cmd.exe /c "$task.exe < $($input.FullName) > $($output.FullName)"
