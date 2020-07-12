@@ -1,5 +1,6 @@
 # Check-Your-Codeforces
-A script to automate testing of C or C++ code for Codeforces competitions.
+A powershell script to automate testing of C or C++ code for Codeforces competitions.
+(Functionality for other languages could be added easily.)
 
 
 This is what the basic file structure of your project should look like:
