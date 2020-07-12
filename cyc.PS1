@@ -46,7 +46,7 @@ while ($input -ne $null -and $input.length -gt 0) {
 
     cmd.exe /c "$task.exe < $($input.FullName) > $($output.FullName)"
     # Start-Process $task -RedirectStandardInput $input.FullName -RedirectStandardOutput $output.FullName
-    fc.exe /n $solution.FullName $output.FullName
+    fc.exe /n /w $solution.FullName $output.FullName
     $test_counter = $test_counter + 1
     $input = Get-ChildItem .\$test_file_location\$test_counter'*in*'
     $output = Get-ChildItem .\$test_file_location\$test_counter'*out*'
